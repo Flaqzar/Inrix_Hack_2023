@@ -15,26 +15,35 @@ class HTMLRegion extends Region
 	final WebView view;
 	final WebEngine engine;
 	 
-	public HTMLRegion(String htmlResourcePath)
+	public HTMLRegion(String htmlResourcePath, String cssResourcePath)
 	{
 		this.view = new WebView();
 		this.engine = this.view.getEngine();
-
+		
 		this.getStyleClass().add("html");
-		
-		String htmlFile;
-		
-		try(InputStream htmlStream = this.getClass().getResourceAsStream(htmlResourcePath))
+
+		if(htmlResourcePath != null)
 		{
-			htmlFile = new String(htmlStream.readAllBytes(), StandardCharsets.UTF_8);
-		}
-		catch(IOException e)
-		{
-			System.out.println("Failed to load resource: " + e.getMessage());
-			htmlFile = "";
+			String htmlFile;
+			
+			try(InputStream htmlStream = this.getClass().getResourceAsStream(htmlResourcePath))
+			{
+				htmlFile = new String(htmlStream.readAllBytes(), StandardCharsets.UTF_8);
+			}
+			catch(IOException e)
+			{
+				System.out.println("Failed to load resource: " + e.getMessage());
+				htmlFile = "";
+			}
+			
+			this.engine.loadContent(htmlFile);
 		}
 		
-		this.engine.loadContent(htmlFile);
+		if(cssResourcePath != null)
+		{
+			this.engine.setUserStyleSheetLocation(this.getClass().getResource(cssResourcePath).toString());
+		}
+		
 		this.getChildren().add(this.view);
 	}
 

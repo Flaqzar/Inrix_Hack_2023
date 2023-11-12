@@ -13,9 +13,8 @@ public class Main extends Application
     public void start(Stage stage)
     {
 		stage.setTitle("Test");
-        this.scene = new Scene(new HTMLRegion("/figma-to-html/index.html"), 750, 500, Color.web("#666970"));
+        this.scene = new Scene(new HTMLRegion("/testing.html", null), 750, 500, Color.web("#666970"));
         stage.setScene(this.scene);
-        //this.scene.getStylesheets().add("figma-to-html/css/main.css");
         stage.show();
     }
  
